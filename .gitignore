@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+build/
+
+# Env (keep examples; ignore secrets if customized)
+# .env files are committed for local demo defaults — remove this comment to ignore:
+# **/.env
+
+# Logs / OS
+*.log
+.DS_Store
+Thumbs.db
