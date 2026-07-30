@@ -9,10 +9,10 @@ const files = [
 ];
 
 const FOOTER_LINES = [
-  'MongoDB linked 🟢',
+  'frontend-only 🟢',
   'coffee levels: high',
   'branch: main ✨',
-  'linter mood: chill',
+  'vercel-ready ✅',
 ];
 
 export default function Sidebar({ open, onClose }) {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import api from '../api/axios';
+import { addProject } from '../data/projectStore';
 import { useFun } from '../context/FunContext';
 
 const ADMIN_PASSWORD = 'adminsecret';
@@ -58,25 +58,18 @@ export default function AdminDashboard() {
     setStatus({ type: '', message: '' });
 
     try {
-      await api.post(
-        '/projects',
-        {
-          ...form,
-          techStack: form.techStack
-            .split(',')
-            .map((t) => t.trim())
-            .filter(Boolean),
-        },
-        {
-          headers: {
-            Authorization: ADMIN_PASSWORD,
-          },
-        }
-      );
+      await new Promise((r) => setTimeout(r, 350));
+      addProject({
+        ...form,
+        techStack: form.techStack
+          .split(',')
+          .map((t) => t.trim())
+          .filter(Boolean),
+      });
 
       setStatus({
         type: 'success',
-        message: '🚀 Project launched into the arcade!',
+        message: '🚀 Project saved in this browser — open /projects to see it!',
       });
       setForm(emptyForm);
       setConfetti(true);
@@ -84,12 +77,10 @@ export default function AdminDashboard() {
       unlock('deploy', 'Deployed live during the demo');
       showToast('🚀 Ship it! Project is live on /projects', 'green');
       setTimeout(() => setConfetti(false), 2200);
-    } catch (err) {
+    } catch {
       setStatus({
         type: 'error',
-        message:
-          err.response?.data?.message ||
-          'Deploy flopped. Check the API and auth header.',
+        message: 'Could not save project to local storage.',
       });
     } finally {
       setSubmitting(false);
@@ -225,8 +216,8 @@ export default function AdminDashboard() {
           Mission Control 🛰️
         </h2>
         <p className="mt-2 text-[var(--text-primary)]">
-          Drop a project into MongoDB and watch the arcade update like magic.
-          Pro tip: deploy something silly during your demo. Instant legend status.
+          Add a project and it saves in this browser (localStorage) — perfect for
+          Vercel demos. Open /projects afterward to see it appear.
         </p>
       </motion.div>
 
@@ -285,7 +276,7 @@ export default function AdminDashboard() {
           className="w-full rounded border border-[var(--accent-blue)] bg-[rgba(97,175,239,0.15)] px-4 py-2.5 font-mono text-sm font-medium transition hover:bg-[rgba(97,175,239,0.25)] disabled:opacity-50"
           style={{ color: 'var(--accent-blue)' }}
         >
-          {submitting ? 'launching rockets…' : '🚀 POST /api/projects'}
+          {submitting ? 'saving…' : '💾 save project'}
         </motion.button>
       </form>
     </section>

@@ -14,10 +14,10 @@ const DOT_MESSAGES = {
 };
 
 const BOOT_LINES = [
-  { color: 'var(--accent-cyan)', text: '✓ Express API online' },
-  { color: 'var(--accent-cyan)', text: '✓ MongoDB connected' },
-  { color: 'var(--accent-cyan)', text: '✓ React + Tailwind ready' },
-  { color: 'var(--accent-green)', text: '✓ charm.modules loaded' },
+  { color: 'var(--accent-cyan)', text: '✓ React app online' },
+  { color: 'var(--accent-cyan)', text: '✓ local project vault ready' },
+  { color: 'var(--accent-cyan)', text: '✓ Tailwind + motion loaded' },
+  { color: 'var(--accent-green)', text: '✓ Vercel-friendly (no backend)' },
   { color: 'var(--accent-purple)', text: '→ awaiting your applause…' },
 ];
 

@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import api from '../api/axios';
+import { getProjects } from '../data/projectStore';
 import ProjectCard from '../components/ProjectCard';
 import { useFun } from '../context/FunContext';
 
 const LOADING_LINES = [
-  'spinning up MongoDB…',
-  'bribing the API with cookies…',
+  'loading local project vault…',
+  'polishing cards…',
   'fetching cool projects…',
   'almost there…',
 ];
@@ -21,40 +21,27 @@ const MOODS = [
 export default function Projects() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
   const [loadLine, setLoadLine] = useState(0);
   const [mood, setMood] = useState('all');
   const [shuffleKey, setShuffleKey] = useState(0);
   const { bumpScore, unlock, showToast } = useFun();
 
   useEffect(() => {
-    let cancelled = false;
+    const timer = setTimeout(() => {
+      setProjects(getProjects());
+      setLoading(false);
+      bumpScore(8);
+      unlock('projects-loaded', 'Project arcade unlocked');
+    }, 450);
 
-    const fetchProjects = async () => {
-      try {
-        setLoading(true);
-        setError('');
-        const { data } = await api.get('/projects');
-        if (!cancelled) {
-          setProjects(data);
-          bumpScore(8);
-          unlock('projects-loaded', 'Project arcade unlocked');
-        }
-      } catch (err) {
-        if (!cancelled) {
-          setError(
-            err.response?.data?.message ||
-              'API went on vacation. Is the backend running on port 5000?'
-          );
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    };
+    const onFocus = () => setProjects(getProjects());
+    window.addEventListener('focus', onFocus);
+    window.addEventListener('storage', onFocus);
 
-    fetchProjects();
     return () => {
-      cancelled = true;
+      clearTimeout(timer);
+      window.removeEventListener('focus', onFocus);
+      window.removeEventListener('storage', onFocus);
     };
   }, []);
 
@@ -107,8 +94,8 @@ export default function Projects() {
           Project Arcade 🕹️
         </h2>
         <p className="mt-2 max-w-xl text-[var(--text-primary)]">
-          Live builds from MongoDB. Filter them, shuffle them, hover them —
-          make the demo feel alive.
+          Frontend-only data vault — showcase projects ship with the app, and
+          Admin additions save in this browser for live demos.
         </p>
 
         <div className="mt-5 flex flex-wrap items-center gap-2">
@@ -141,9 +128,19 @@ export default function Projects() {
           >
             shuffle 🎲
           </button>
+          <button
+            type="button"
+            onClick={() => {
+              setProjects(getProjects());
+              showToast('↻ Reloaded project vault', 'cyan');
+            }}
+            className="rounded border border-[var(--border)] px-3 py-1.5 font-mono text-xs text-[var(--text-muted)] transition hover:border-[var(--accent-green)] hover:text-[var(--accent-green)]"
+          >
+            refresh
+          </button>
         </div>
 
-        {!loading && !error && projects.length > 0 && (
+        {!loading && projects.length > 0 && (
           <p className="mt-3 font-mono text-xs" style={{ color: 'var(--accent-cyan)' }}>
             showing {visible.length}/{projects.length} · fun filter: {mood}
           </p>
@@ -163,16 +160,7 @@ export default function Projects() {
         </motion.div>
       )}
 
-      {error && (
-        <div
-          className="rounded border border-[var(--accent-red)] bg-[rgba(224,108,117,0.1)] px-4 py-3 font-mono text-sm"
-          style={{ color: 'var(--accent-red)' }}
-        >
-          💥 Error: {error}
-        </div>
-      )}
-
-      {!loading && !error && visible.length === 0 && (
+      {!loading && visible.length === 0 && (
         <div className="rounded border border-dashed border-[var(--border)] px-6 py-12 text-center">
           <p className="font-mono text-sm text-[var(--text-muted)]">
             No matches for this filter. Hit “all” or shuffle again.
