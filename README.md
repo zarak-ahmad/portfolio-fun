@@ -26,19 +26,15 @@ Admin password: `adminsecret`
 
 ## Deploy to Vercel
 
-### Option A — Dashboard (easiest)
-
 1. Push this repo to GitHub.
-2. Go to [vercel.com](https://vercel.com) → **Add New Project** → import the repo.
-3. Set **Root Directory** to `frontend` (important).
-4. Framework: Vite (auto-detected). Build: `npm run build`. Output: `dist`.
-5. Deploy.
+2. On [vercel.com](https://vercel.com) → import **zarak-portfolio**.
+3. Set **Root Directory** to `frontend`.
+4. Leave Install / Build commands as defaults (`npm install`, `npm run build`).
+   - If you previously set `npm install --prefix frontend`, **clear that override** — it causes a double `frontend/frontend` path error.
+5. Output directory: `dist` (auto with Vite).
+6. Deploy.
 
-### Option B — Whole repo from root
-
-Root `vercel.json` already builds `frontend/` and publishes `frontend/dist`. Just import the repo and deploy with default settings (no Root Directory change needed).
-
-### Option C — CLI
+Or from CLI:
 
 ```bash
 cd frontend
