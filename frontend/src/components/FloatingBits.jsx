@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 const BITS = [
   { text: 'const vibe = "on";', x: '8%', y: '18%', delay: 0 },
-  { text: 'npm run fun', x: '72%', y: '22%', delay: 0.4 },
+  { text: 'npm run build', x: '72%', y: '22%', delay: 0.4 },
   { text: '{ ship: true }', x: '15%', y: '68%', delay: 0.8 },
   { text: '// no bugs here*', x: '78%', y: '70%', delay: 1.2 },
   { text: '<Wow />', x: '55%', y: '12%', delay: 0.2 },

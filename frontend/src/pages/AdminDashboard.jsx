@@ -105,7 +105,7 @@ export default function AdminDashboard() {
             <span className="h-2.5 w-2.5 rounded-full" style={{ background: 'var(--accent-orange)' }} />
             <span className="h-2.5 w-2.5 rounded-full" style={{ background: 'var(--accent-green)' }} />
             <span className="ml-2 font-mono text-xs text-[var(--text-muted)]">
-              sudo auth — fun edition
+              sudo auth
             </span>
           </div>
 
@@ -149,7 +149,7 @@ export default function AdminDashboard() {
               className="w-full rounded border border-[var(--accent-purple)] bg-[rgba(198,120,221,0.15)] px-4 py-2.5 font-mono text-sm font-medium transition hover:bg-[rgba(198,120,221,0.25)]"
               style={{ color: 'var(--accent-purple)' }}
             >
-              unlock the fun
+              unlock
             </motion.button>
           </form>
         </motion.div>

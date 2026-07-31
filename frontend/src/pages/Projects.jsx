@@ -142,7 +142,7 @@ export default function Projects() {
 
         {!loading && projects.length > 0 && (
           <p className="mt-3 font-mono text-xs" style={{ color: 'var(--accent-cyan)' }}>
-            showing {visible.length}/{projects.length} · fun filter: {mood}
+            showing {visible.length}/{projects.length} · filter: {mood}
           </p>
         )}
       </motion.div>

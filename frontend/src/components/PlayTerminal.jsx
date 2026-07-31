@@ -67,7 +67,7 @@ export default function PlayTerminal() {
       output = ['matrix mode toggled — look behind you 👀'];
     } else if (inputLower === 'score') {
       output = [
-        `fun score: ${fun.score} XP · achievements: ${fun.achievements.length}`,
+        `score: ${fun.score} XP · achievements: ${fun.achievements.length}`,
       ];
     } else if (inputLower === 'projects') {
       output = ['opening tip: click Projects.jsx in the sidebar 😄'];

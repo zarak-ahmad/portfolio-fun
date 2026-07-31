@@ -1,145 +1,57 @@
-# Developer Command Center
+# Zarak Portfolio
 
-A MERN-stack portfolio themed like a VS Code / terminal command center — with a live project grid and a phone-friendly admin CMS for real-time demos.
+Frontend-only portfolio for **Zarak Ahmad** (React + Vite + Tailwind) — ready for **Vercel free tier**. No Express/MongoDB required.
 
-## Stack
+## Why frontend-only?
 
-| Layer | Tech |
-|-------|------|
-| Backend | Node, Express, MongoDB, Mongoose |
-| Frontend | React (Vite), Tailwind CSS v4, Framer Motion, React Router, Axios |
-| Theme | One Dark Pro inspired (CSS variables) |
+Vercel’s free hobby plan is built for static/frontend apps. This project now stores:
 
-## Project structure
+| Data | Where |
+|------|--------|
+| Your 5 showcase projects | Bundled in the app (`src/data/projects.js`) |
+| Projects added via `/admin` | Browser **localStorage** (great for live demos on that device) |
 
-```
-portfolio/
-├── backend/
-│   ├── middleware/auth.js
-│   ├── models/Project.js
-│   ├── routes/projects.js
-│   ├── server.js
-│   └── .env
-└── frontend/
-    └── src/
-        ├── api/axios.js
-        ├── components/  (Layout, Sidebar, Hero, ProjectCard)
-        └── pages/       (Home, Projects, AdminDashboard)
-```
+The old `backend/` folder can stay for learning, but **you do not need it to deploy**.
 
-## Prerequisites
-
-- Node.js 18+
-- Local MongoDB running on `mongodb://127.0.0.1:27017`
-- (Optional) [ngrok](https://ngrok.com/) for phone/admin demos
-
-## Install dependencies
-
-Already done if you followed the setup. To reinstall:
+## Local run
 
 ```bash
-# Backend
-cd backend
-npm install express mongoose cors dotenv
-npm install -D nodemon
-
-# Frontend
 cd frontend
 npm install
-npm install -D tailwindcss @tailwindcss/vite
-npm install framer-motion axios react-type-animation react-router-dom
-```
-
-## Run both servers
-
-Open **two terminals**:
-
-**Terminal 1 — API (port 5000)**
-
-```bash
-cd backend
 npm run dev
 ```
 
-**Terminal 2 — React (port 5173)**
+Open http://localhost:6100  
+Admin password: `adminsecret`
+
+## Deploy to Vercel
+
+### Option A — Dashboard (easiest)
+
+1. Push this repo to GitHub.
+2. Go to [vercel.com](https://vercel.com) → **Add New Project** → import the repo.
+3. Set **Root Directory** to `frontend` (important).
+4. Framework: Vite (auto-detected). Build: `npm run build`. Output: `dist`.
+5. Deploy.
+
+### Option B — Whole repo from root
+
+Root `vercel.json` already builds `frontend/` and publishes `frontend/dist`. Just import the repo and deploy with default settings (no Root Directory change needed).
+
+### Option C — CLI
 
 ```bash
 cd frontend
-npm run dev
+npx vercel
 ```
 
-Then open:
+## After deploy
 
-- Portfolio: http://localhost:5173
-- Projects: http://localhost:5173/projects
-- Admin CMS: http://localhost:5173/admin
-- API health: http://localhost:5000
+- Home: `https://your-app.vercel.app/`
+- Projects: `https://your-app.vercel.app/projects`
+- Admin: `https://your-app.vercel.app/admin`
 
-### Auth secrets
+## Notes for demos
 
-| Where | Value |
-|-------|-------|
-| Admin login password (frontend) | `adminsecret` |
-| API `Authorization` header (POST) | `adminsecret` |
-| Backend `.env` `ADMIN_SECRET` | `adminsecret` |
-
-## API
-
-| Method | Route | Auth | Description |
-|--------|-------|------|-------------|
-| `GET` | `/api/projects` | Public | List all projects |
-| `POST` | `/api/projects` | Header `Authorization: adminsecret` | Create a project |
-
-Example create:
-
-```bash
-curl -X POST http://localhost:5000/api/projects ^
-  -H "Content-Type: application/json" ^
-  -H "Authorization: adminsecret" ^
-  -d "{\"title\":\"Demo App\",\"description\":\"Live from the terminal\",\"techStack\":[\"React\",\"Node\"],\"liveUrl\":\"\",\"githubUrl\":\"\",\"imageUrl\":\"\"}"
-```
-
-## Live demo with ngrok (phone admin)
-
-So you can add projects from your phone during a presentation:
-
-1. Start backend + frontend as above.
-2. Expose the **backend** (or the whole stack via frontend proxy — simplest is expose both or just use LAN; for internet, expose frontend and point `VITE_API_URL` at an ngrok URL for the API):
-
-```bash
-# Terminal 3 — expose API
-ngrok http 5000
-```
-
-3. Copy the HTTPS forwarding URL (e.g. `https://abc123.ngrok-free.app`).
-4. In `frontend/.env`, set:
-
-```env
-VITE_API_URL=https://abc123.ngrok-free.app/api
-```
-
-5. Restart the Vite dev server, then optionally expose the frontend too:
-
-```bash
-ngrok http 5173
-```
-
-6. On your phone, open the frontend ngrok URL → `/admin` → login with `adminsecret` → submit a project → refresh `/projects` on the laptop to see it appear live.
-
-> Tip: For a quick classroom demo on the same Wi‑Fi, skip ngrok and open `http://YOUR_LAN_IP:5173` on your phone (update CORS/API URL if needed).
-
-## Environment
-
-**backend/.env**
-
-```env
-PORT=5000
-MONGO_URI=mongodb://127.0.0.1:27017/dev-command-center
-ADMIN_SECRET=adminsecret
-```
-
-**frontend/.env**
-
-```env
-VITE_API_URL=http://localhost:5000/api
-```
+- Admin-added projects are saved **in that browser only** (localStorage). Clearing site data removes them; the 5 built-in projects always remain.
+- To permanently add a project for everyone, edit `frontend/src/data/projects.js` and redeploy.

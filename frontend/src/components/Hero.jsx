@@ -44,7 +44,7 @@ export default function Hero() {
         className="relative mb-4 font-mono text-sm"
         style={{ color: 'var(--accent-green)' }}
       >
-        $ whoami --fun-mode
+        $ whoami
       </motion.p>
 
       <motion.h1

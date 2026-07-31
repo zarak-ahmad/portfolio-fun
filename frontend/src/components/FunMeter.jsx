@@ -16,7 +16,7 @@ export default function FunMeter() {
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="font-mono text-xs" style={{ color: 'var(--accent-purple)' }}>
-          fun.exe — level {level}
+          portfolio.exe — level {level}
         </p>
         <p className="font-mono text-[10px] text-[var(--text-muted)]">
           {achievements.length} achievements · ↑↑↓↓←→←→BA for secret
