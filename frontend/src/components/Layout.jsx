@@ -6,6 +6,7 @@ import StatusBar from './StatusBar';
 import ClickSparkles from './ClickSparkles';
 import FunToast from './FunToast';
 import MatrixRain from './MatrixRain';
+import CursorChaser from './CursorChaser';
 import { useFun } from '../context/FunContext';
 
 export default function Layout() {
@@ -15,6 +16,7 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen">
+      <CursorChaser />
       <ClickSparkles />
       <FunToast />
       <MatrixRain active={matrixMode} />

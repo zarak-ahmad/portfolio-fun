@@ -135,3 +135,128 @@ body.matrix-mode {
     radial-gradient(ellipse 60% 40% at 90% 10%, rgba(86, 182, 194, 0.08), transparent),
     linear-gradient(180deg, #04140a 0%, #0a0e14 100%);
 }
+
+/* Custom cursor chaser — desktop only */
+html.custom-cursor-on,
+html.custom-cursor-on * {
+  cursor: none !important;
+}
+
+.cursor-chaser {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.cursor-chaser__core {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  will-change: transform;
+}
+
+.cursor-chaser__cross-h,
+.cursor-chaser__cross-v {
+  position: absolute;
+  background: var(--accent-blue);
+  opacity: 0.95;
+}
+
+.cursor-chaser__cross-h {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  transform: translateY(-50%);
+}
+
+.cursor-chaser__cross-v {
+  left: 50%;
+  top: 0;
+  width: 1.5px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.cursor-chaser__dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px rgba(152, 195, 121, 0.7);
+}
+
+.cursor-chaser__core.is-hot .cursor-chaser__cross-h,
+.cursor-chaser__core.is-hot .cursor-chaser__cross-v {
+  background: var(--accent-orange);
+}
+
+.cursor-chaser__core.is-hot .cursor-chaser__dot {
+  background: var(--accent-orange);
+  box-shadow: 0 0 10px rgba(209, 154, 102, 0.8);
+}
+
+.cursor-chaser__ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid rgba(97, 175, 239, 0.65);
+  border-radius: 50%;
+  will-change: transform;
+  box-shadow: 0 0 0 1px rgba(86, 182, 194, 0.15);
+  transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+}
+
+.cursor-chaser__ring.is-hot {
+  width: 48px;
+  height: 48px;
+  border-color: var(--accent-orange);
+  border-style: dashed;
+}
+
+.cursor-chaser__ring.is-pulse {
+  animation: cursor-pulse 0.45s ease-out;
+}
+
+@keyframes cursor-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(97, 175, 239, 0.45);
+  }
+  100% {
+    box-shadow: 0 0 0 18px rgba(97, 175, 239, 0);
+  }
+}
+
+.cursor-chaser__glyph {
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  will-change: transform, opacity;
+  text-shadow: 0 0 8px currentColor;
+}
+
+.cursor-chaser__label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  opacity: 0.7;
+  will-change: transform;
+}

@@ -17,7 +17,6 @@ const BOOT_LINES = [
   { color: 'var(--accent-cyan)', text: '✓ React app online' },
   { color: 'var(--accent-cyan)', text: '✓ local project vault ready' },
   { color: 'var(--accent-cyan)', text: '✓ Tailwind + motion loaded' },
-  { color: 'var(--accent-green)', text: '✓ Vercel-friendly (no backend)' },
   { color: 'var(--accent-purple)', text: '→ awaiting your applause…' },
 ];
 
